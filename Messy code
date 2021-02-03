@@ -1,0 +1,72 @@
+#include <Stepper.h>
+
+#define A 2
+#define B 3
+#define C 4
+#define D 5
+
+const int stepsPerRevolution = 200;
+
+Stepper myStepper(stepsPerRevolution, 2, 3, 4, 5);
+
+const int LED13=13;
+
+void setup(){
+  myStepper.setSpeed(60);
+  pinMode(A,OUTPUT);
+  pinMode(B,OUTPUT);
+  pinMode(C,OUTPUT);
+  pinMode(D,OUTPUT);
+}
+
+void write(int a,int b,int c,int d){
+  digitalWrite(A,a);
+  digitalWrite(B,b);
+  digitalWrite(C,c);
+  digitalWrite(D,d);
+}
+
+void cycle() {
+  myStepper.step(-300);
+  vibrate(3);
+  myStepper.step(600);
+}
+
+void vibrate(int times) {
+  int i;
+  i=0;
+  while (i<times) {
+    myStepper.step(-50);
+    delay(10);
+    myStepper.step(50);
+    delay(10);
+    i++;
+  }
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //digitalWrite(LED13, HIGH);
+  int k;
+  k=0;
+  while(k<1) {
+    vibrate(3);
+    cycle();
+    vibrate(3);
+    cycle();
+    vibrate(3);
+    cycle();
+    vibrate(3);
+    cycle();
+    vibrate(3);
+    cycle();
+    vibrate(3);
+    cycle();
+    vibrate(3);
+    //delay(20000);
+    k++;    
+  }
+  //digitalWrite(LED13, LOW);
+  write(0,0,0,0);
+  delay(10752000);
+}
